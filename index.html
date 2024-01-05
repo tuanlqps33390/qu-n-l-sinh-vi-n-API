@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Sinh Viên</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        nav {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        
+        nav li {
+            margin: 0 10px;
+        }
+        
+        nav li a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav li a:hover {
+            background-color: #ddd;
+            color: #000;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        #student-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .student-item {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .student-item strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="add-students.html">Thêm</a></li>
+            <li><a href="update-students.html">Sửa</a></li>
+            <li><a href="delete-students.html">Xoá</a></li>
+          
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Danh Sách Sinh Viên</h1>
+        <ul id="student-list">
+            <!-- Danh sách sản phẩm sẽ được thêm vào đây bằng javascript -->
+        </ul>
+    </div>
+    
+    <script>    
+        // Sử dụng JavaScript để gọi API và hiển thị dữ liệu
+        fetch('http://localhost:9009/students')
+        .then(response => response.json())
+        .then(data => {
+            const studentList = document.getElementById('student-list');
+            data.forEach(student => {
+                const listItem = document.createElement('li');
+                listItem.className = 'student-item';
+                listItem.innerHTML = `
+
+                    <br><strong>Mã SV:</strong> ${student.masv}<br>
+                    <strong>Tên:</strong> ${student.hoten}<br>
+                    <strong>Lớp:</strong> ${student.lop}<br>
+                    <strong>Khoa:</strong> ${student.khoa}<br>
+                `;
+                studentList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
